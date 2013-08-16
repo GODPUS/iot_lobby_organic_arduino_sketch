@@ -13,9 +13,10 @@ for Triple Axis Accelerometer Breakout - ADXL335 https://www.sparkfun.com/produc
 tested on FIO v3 boards https://www.sparkfun.com/products/11520
 */
 
-String objectBrand = "nike";
-String applicationAddress = "http://afternoon-fjord-6952.herokuapp.com/"
-int gThreshold = 30;
+String objectBrand = "quaker";
+//String applicationAddress = "http://afternoon-fjord-6952.herokuapp.com/";
+String applicationAddress = "http://192.168.23.67:5000/";
+int gThreshold = 5;
 int x, y, z, xOld, yOld, zOld;
 
 void setup()
@@ -35,16 +36,16 @@ void setup()
 void loop()
 {
   //get new values from the Accelerometer 
-  x = analogRead(1);
-  y = analogRead(2);
-  z = analogRead(3);
+  x = (analogRead(A1)-510)+90; //conversion to degrees then add 90 so that the device corresponds to the way you hold it
+  y = (analogRead(A2)-510)*-1; //conversion to degrees
+  z = (analogRead(A3)-510)*-1; //conversion to degrees
   
   //we only want to take action if there's been significant movement, hence the threshold test
-  if(abs(xOld - x) > gThreshold || abs(yOld - y) > gThreshold || abs(zOld - z) > gThreshold)
+  if(abs(xOld - x) > gThreshold || abs(yOld - y) > gThreshold)
   {
     //build the url to call, final url looks something like
     //http://afternoon-fjord-6952.herokuapp.com/movement?object=nike&x=22&y=57&z=90
-    String url = applicationAddress+"movement?object="+objectBrand+"&x="+abs(xOld - x)+"&y="+abs(yOld - y)+"&z="+abs(zOld - z);
+    String url = applicationAddress+"movement?object="+objectBrand+"&x="+(x)+"&y="+(y)+"&z="+(z);
     
     //call the url via xbee through iDigi connect port
     Serial.println(url);
@@ -58,6 +59,6 @@ void loop()
   yOld = y;
   zOld = z;
   
-  delay(100);              // wait 100ms for next reading
+  delay(500);              // wait 100ms for next reading
 }
 
