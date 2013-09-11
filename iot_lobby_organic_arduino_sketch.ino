@@ -15,7 +15,7 @@ tested on FIO v3 boards https://www.sparkfun.com/products/11520
 
 String objectBrand = "quaker";
 //String applicationAddress = "http://afternoon-fjord-6952.herokuapp.com/";
-String applicationAddress = "http://192.168.23.67:5000/";
+String applicationAddress = "http://192.168.23.61:5000/";
 int gThreshold = 5;
 int x, y, z, xOld, yOld, zOld;
 
